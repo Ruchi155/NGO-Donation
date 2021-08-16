@@ -25,56 +25,56 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class Users { 
-		@Id
-	    @GeneratedValue(strategy = GenerationType.AUTO)
-		@Column(name = "user_id")
-	    private Long id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+    private Long id;
 
-	    private String firstName;
-	    private String lastName;
-	    @Column(name = "email")
-	    private String email;
-	    private String password;
+    private String firstName;
+    private String lastName;
+    @Column(name = "email")
+    private String email;
+    private String password;
 
-	    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	    @JoinTable(
-	            name = "users_roles",
-	            joinColumns = @JoinColumn(
-	                    name = "user_id", referencedColumnName = "user_id"),
-	            inverseJoinColumns = @JoinColumn(
-	                    name = "role_id", referencedColumnName = "id"))
-	    private Collection<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 
-	    public Users() {
-	    }
+    public Users() {
+    }
 
-	    public Users(String firstName, String lastName, String email, String password) {
-	        this.firstName = firstName;
-	        this.lastName = lastName;
-	        this.email = email;
-	        this.password = password;
-	    }
+    public Users(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 
-	    public Users(String firstName, String lastName, String email, String password, Collection<Role> roles) {
-	        this.firstName = firstName;
-	        this.lastName = lastName;
-	        this.email = email;
-	        this.password = password;
-	        this.roles = roles;
-	    }  
+    public Users(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }  
 
-		@Override
-	    public String toString() {
-	        return "User{" +
-	                "id=" + id +
-	                ", firstName='" + firstName + '\'' +
-	                ", lastName='" + lastName + '\'' +
-	                ", email='" + email + '\'' +
-	                ", password='" + "*********" + '\'' +
-	                ", roles=" + roles +
-	                '}';
-	    }
-	}
+	@Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + "*********" + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+}
 
 
 
