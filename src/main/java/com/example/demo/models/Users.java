@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 
 import java.util.Collection;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +19,9 @@ import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Data; 
 import lombok.NoArgsConstructor;
+ 
 @Data
 @Entity(name = "Users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email"}), name = "Users")
@@ -59,6 +61,5 @@ public class Users {
                 '}';
     }
 }
-
 
 
