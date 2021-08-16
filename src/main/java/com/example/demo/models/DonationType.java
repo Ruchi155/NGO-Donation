@@ -26,10 +26,10 @@ public class DonationType implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-//	@OneToOne(
-//			fetch = FetchType.LAZY,
-//			cascade = CascadeType.ALL,
-//			mappedBy = "donationType"
-//			) 
-//	private Donation donation;
+	@OneToOne(
+			fetch = FetchType.LAZY,
+			cascade = CascadeType.ALL,
+			mappedBy = "donationType"
+			) 
+	private Donation donation;
 }

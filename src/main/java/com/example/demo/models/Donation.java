@@ -38,10 +38,10 @@ public class Donation implements Serializable{
 	@Column(name =  "amount")
 	private double amount;
 	
-//	@OneToOne(fetch = FetchType.LAZY, 
-//			 cascade = CascadeType.ALL )
-//	@JoinColumn(name = "type_id", nullable =  false)
-//	private DonationType donationType;  
+	@OneToOne(fetch = FetchType.LAZY, 
+			 cascade = CascadeType.ALL )
+	@JoinColumn(name = "type_id", nullable =  false)
+	private DonationType donationType;  
 	
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "user_id")
