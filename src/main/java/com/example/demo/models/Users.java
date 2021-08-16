@@ -19,11 +19,13 @@ import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 @Data
 @Entity(name = "Users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email"}), name = "Users")
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class Users { 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,25 +45,7 @@ public class Users {
                     name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles;
-
-    public Users() {
-    }
-
-    public Users(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Users(String firstName, String lastName, String email, String password, Collection<Role> roles) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }  
+    private Collection<Role> roles; 
 
 	@Override
     public String toString() {
