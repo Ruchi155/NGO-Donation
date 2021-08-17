@@ -12,34 +12,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany; 
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint; 
+import javax.persistence.UniqueConstraint;  
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
- 
+import lombok.ToString; 
 @Data
 @Entity(name = "Users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email"}), name = "Users")
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor 
 @ToString
 @EqualsAndHashCode
-public class Users implements Serializable{ 
+public class Users implements Serializable{  
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
-    private Long id;
-
+    private Long id; 
     private String firstName;
     private String lastName;
     @Column(name = "email")
     private String email;
-    private String password;
-
+    private String password; 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -47,9 +44,7 @@ public class Users implements Serializable{
                     name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles; 
-
- 
+    private Collection<Role> roles;  
 }
 
 

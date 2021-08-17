@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController; 
 import com.example.demo.models.Donation;
 import com.example.demo.services.DonationService;
 
 @RestController
+
+@RequestMapping("/ngodonation")
 public class DonationController {
 	@Autowired
 	DonationService donateService;
