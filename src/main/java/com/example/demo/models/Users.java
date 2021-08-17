@@ -1,4 +1,5 @@
 package com.example.demo.models; 
+import java.io.Serializable;
 import java.util.Collection; 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,8 +15,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint; 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data; 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
  
 @Data
 @Entity(name = "Users")
@@ -23,7 +26,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Users { 
+@ToString
+@EqualsAndHashCode
+public class Users implements Serializable{ 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
@@ -35,7 +40,7 @@ public class Users {
     private String email;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -44,17 +49,7 @@ public class Users {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles; 
 
-	@Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + "*********" + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
+ 
 }
 
 

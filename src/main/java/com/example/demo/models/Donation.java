@@ -14,9 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 @Data 
@@ -26,6 +31,7 @@ import lombok.ToString;
 @NoArgsConstructor  
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class Donation implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +40,15 @@ public class Donation implements Serializable{
 	@Column(name =  "date")
 	private LocalDate date;
 	@Column(name =  "amount")
-	private double amount;
-	
-	@OneToOne(fetch = FetchType.LAZY, 
+	private double amount; 
+	@OneToOne(fetch = FetchType.EAGER, 
 			 cascade = CascadeType.ALL  )
 	@JoinColumn(name = "type_id", nullable =  false)
+	@JsonManagedReference
+   
 	private DonationType donationType;  
 	
-	@ManyToOne(fetch = FetchType.LAZY )
-	@JoinColumn(name = "user_id")
+	@ManyToOne(fetch = FetchType.EAGER )
+	@JoinColumn(name = "user_id") 
 	private Users user;
 }

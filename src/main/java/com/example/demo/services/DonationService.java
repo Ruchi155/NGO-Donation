@@ -12,7 +12,7 @@ import com.example.demo.repo.DonationRepo;
 public class DonationService {
 	@Autowired
 	private DonationRepo donationRepo;
-	public List<Donation> getAll(){
+	public List<Donation> findAll(){
 		return donationRepo.findAll();
 	}
 	public Optional<Donation >findById(long id) {
