@@ -1,4 +1,5 @@
 package com.example.demo.models; 
+import java.io.Serializable;
 import java.util.Collection; 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany; 
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint; 
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.type.SerializableType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data; 
@@ -23,7 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Users { 
+public class Users implements Serializable { 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
@@ -55,6 +59,56 @@ public class Users {
                 ", roles=" + roles +
                 '}';
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
+
+	
 }
 
 
