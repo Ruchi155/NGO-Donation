@@ -27,11 +27,11 @@ public class DonationController {
 	@GetMapping("/donations")
 	public ResponseEntity<List<Donation> >getAllDonation(){
 		try {
-			List<Donation> donations =  donateService.getAll();
+			List<Donation> donations =  donateService.findAll();
 			if(donations.isEmpty()) {
 				return new ResponseEntity<List<Donation>>(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<> (donations, HttpStatus.OK);
+			return new ResponseEntity<List<Donation>> (donations, HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
 			// TODO: handle exception
