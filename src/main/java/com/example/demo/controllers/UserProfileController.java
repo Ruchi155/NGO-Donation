@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.UserProfile;
 import com.example.demo.services.UserProfileService;
-//@RequestMapping("/ngodonation")
+@RequestMapping("/profiles")
 @RestController
 public class UserProfileController {
 	@Autowired

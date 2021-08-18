@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.Donation;
 import com.example.demo.services.DonationService;
 
-@RestController
-
-//@RequestMapping("/ngodonation")
+@RestController() 
+@RequestMapping("/donations")
 public class DonationController {
 	@Autowired
 	DonationService donateService;
 	
-	@GetMapping("/donations")
+	@GetMapping("/")
 	public ResponseEntity<List<Donation> >getAllDonation(){
 		try {
 			List<Donation> donations =  donateService.findAll();
