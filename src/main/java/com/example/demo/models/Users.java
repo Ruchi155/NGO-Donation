@@ -10,9 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany; 
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;  
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,7 +48,13 @@ public class Users implements Serializable{
                     name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles;  
+    private Collection<Role> roles; 
+    
+    @OneToOne(fetch = FetchType.EAGER, 
+			 cascade = CascadeType.ALL  )
+	@JoinColumn(name = "profile_id", referencedColumnName = "id" , nullable =  false)
+	@JsonManagedReference  
+    private UserProfile userProfile;
 }
 
 

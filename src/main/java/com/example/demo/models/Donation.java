@@ -34,7 +34,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Donation implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name =  "id")
 	private Long id; 
 	@Column(name =  "date")
@@ -44,11 +44,11 @@ public class Donation implements Serializable{
 	@OneToOne(fetch = FetchType.EAGER, 
 			 cascade = CascadeType.ALL  )
 	@JoinColumn(name = "type_id", nullable =  false)
-	@JsonManagedReference
-   
+	@JsonManagedReference 
 	private DonationType donationType;  
 	
 	@ManyToOne(fetch = FetchType.EAGER )
 	@JoinColumn(name = "user_id") 
+	@JsonIgnore
 	private Users user;
 }

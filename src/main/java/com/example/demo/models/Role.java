@@ -1,12 +1,18 @@
 package com.example.demo.models; 
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table; 
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity (name = "Role")
@@ -14,7 +20,10 @@ import lombok.ToString;
 @ToString
 @Table(name = "Role")
 @EqualsAndHashCode
-public class Role
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Role implements Serializable
 {		
  	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
