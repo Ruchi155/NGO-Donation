@@ -19,7 +19,7 @@ import com.example.demo.services.DonationService;
 
 @RestController
 
-@RequestMapping("/ngodonation")
+//@RequestMapping("/ngodonation")
 public class DonationController {
 	@Autowired
 	DonationService donateService;
@@ -37,7 +37,7 @@ public class DonationController {
 			// TODO: handle exception
 		} 
 	}
-	@PostMapping("/donations")
+	@PostMapping("/adddonation")
 	public ResponseEntity<Donation> createDonation(@Valid @RequestBody Donation donation) {
 		try {
 			donateService.save(donation);
@@ -47,7 +47,7 @@ public class DonationController {
 		}
 		 
 	}
-	@GetMapping("/donations/{id}")
+	@GetMapping("/finddonation/{id}")
 	public ResponseEntity<Donation> getDonationById(@PathVariable(value = "id") Long donationId)  {
 		Optional<Donation> donationData= donateService.findById(donationId);
 		if(donationData.isPresent()) {
@@ -57,16 +57,14 @@ public class DonationController {
 			return new ResponseEntity<> (HttpStatus.NOT_FOUND);
 		} 
 	}
-	@PutMapping("/donations/{id}")
+	@PutMapping("/updatedonation/{id}")
 	public ResponseEntity<Donation> updateDonation(@PathVariable (value = "id") Long donationId,
 									@Valid @RequestBody Donation donation)
 	{
 		Optional<Donation> donationData = donateService.findById(donationId);
 		if(donationData.isPresent()) {
 			Donation donationGet = donationData.get();
-			donationGet.setAmount(donation.getAmount());
-			donationGet.setDate(LocalDate.now());
-			donationGet.setDonationType(donation.getDonationType());
+			donationGet = donation;
 			return new ResponseEntity<>(donateService.save(donationGet), HttpStatus.OK); 
 		}
 		else {
@@ -74,7 +72,7 @@ public class DonationController {
 		}
 		
 	}
-	@DeleteMapping("/donations/{id}")
+	@DeleteMapping("/deletedonation/{id}")
 	public ResponseEntity<HttpStatus> deleteDonation(@PathVariable (value = "id") Long donationId){ 
 		try {
 			donateService.deleteById(donationId);
@@ -84,7 +82,7 @@ public class DonationController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}  
 	}
-	@DeleteMapping("/donations")
+	@DeleteMapping("/deletealldonations")
 	public ResponseEntity<HttpStatus> deleteAllDonation(){
 		try {
 			donateService.deleteAll();

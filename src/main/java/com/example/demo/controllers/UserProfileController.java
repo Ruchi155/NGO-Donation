@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.UserProfile;
 import com.example.demo.services.UserProfileService;
-@RequestMapping("/ngodonation")
+//@RequestMapping("/ngodonation")
 @RestController
 public class UserProfileController {
 	@Autowired
@@ -39,7 +39,7 @@ public class UserProfileController {
 			// TODO: handle exception
 		} 
 	}
-	@PostMapping("/profiles")
+	@PostMapping("/addprofile")
 	public ResponseEntity<UserProfile> createDonation(@Valid @RequestBody UserProfile donation) {
 		try {
 			profileService.save(donation);
@@ -49,7 +49,7 @@ public class UserProfileController {
 		}
 		 
 	}
-	@GetMapping("/profiles/{id}")
+	@GetMapping("/findprofile/{id}")
 	public ResponseEntity<UserProfile> getDonationById(@PathVariable(value = "id") Long donationId)  {
 		Optional<UserProfile> userProfileData= profileService.findById(donationId);
 		if(userProfileData.isPresent()) {
@@ -59,7 +59,7 @@ public class UserProfileController {
 			return new ResponseEntity<> (HttpStatus.NOT_FOUND);
 		} 
 	}
-	@PutMapping("/profiles/{id}")
+	@PutMapping("/updateprofile/{id}")
 	public ResponseEntity<UserProfile> updateDonation(@PathVariable (value = "id") Long donationId,
 									@Valid @RequestBody UserProfile profile)
 	{
@@ -74,7 +74,7 @@ public class UserProfileController {
 		}
 		
 	}
-	@DeleteMapping("/profiles/{id}")
+	@DeleteMapping("/deleteprofile/{id}")
 	public ResponseEntity<HttpStatus> deleteDonation(@PathVariable (value = "id") Long donationId){ 
 		try {
 			profileService.deleteById(donationId);
@@ -84,7 +84,7 @@ public class UserProfileController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}  
 	}
-	@DeleteMapping("/profiles")
+	@DeleteMapping("/deleteallprofiles")
 	public ResponseEntity<HttpStatus> deleteAllDonation(){
 		try {
 			profileService.deleteAll();

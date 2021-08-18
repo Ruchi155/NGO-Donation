@@ -25,11 +25,18 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Role implements Serializable
 {		
- 	@Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;  
-}
+    private String name;
 
+    public Role() {
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
+
+    }
 
 

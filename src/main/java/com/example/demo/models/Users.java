@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString; 
 @Data
@@ -30,7 +31,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor 
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode 
 public class Users implements Serializable{  
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,6 +56,16 @@ public class Users implements Serializable{
 	@JoinColumn(name = "profile_id", referencedColumnName = "id" , nullable =  false)
 	@JsonManagedReference  
     private UserProfile userProfile;
+    
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+ 
+
 }
 
 
