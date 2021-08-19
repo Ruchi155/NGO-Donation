@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -16,12 +17,13 @@ import org.springframework.stereotype.Service;
 import com.example.demo.config.UserRegistrationDto;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.models.Role;
+import com.example.demo.models.UserProfile;
 import com.example.demo.models.Users;
 import com.example.demo.repo.UserRepo;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService  implements UserDetailsService
+public class UserService implements UserDetailsService  
 {
 	@Autowired
 	UserRepo userrepo;
@@ -29,33 +31,47 @@ public class UserService  implements UserDetailsService
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	public Users save(UserRegistrationDto registration){
+	public Users save(UserRegistrationDto registration)//, tring Role)
+	{
 		Users user = new  Users(); 
 		user.setFirstName(registration.getFirstName());
 		user.setLastName(registration.getLastName());
 		user.setEmail(registration.getEmail());
 		user.setPassword(passwordEncoder.encode(registration.getPassword()));
-		user.setRoles(Arrays.asList(new Role("ROLE_USER"))); 
+	    user.setRoles(Arrays.asList(new Role(registration.getRole())));
+	
+		user.setUserProfile(new UserProfile());
 		return userrepo.save(user); 
 	 }
-	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-		return roles.stream()
-					.map(role -> new SimpleGrantedAuthority(role.getName()))
-					.collect(Collectors.toList());
+	
+	
+	public Users findUserByEmail(String email) {
+		return userrepo.findUserByEmail(email);
 	}
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		 Users user = userrepo.findByEmail(email);
-	        if (user == null){
-	            throw new UsernameNotFoundException("Invalid username or password.");
-	        }
-	        return new org.springframework.security.core.userdetails.User
-	        		(
-		        		user.getEmail(),
-		                user.getPassword(),  
-		                mapRolesToAuthorities(user.getRoles())
-	                );
-	}
+	
+
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Users user = userrepo.findUserByEmail(email);
+        if (user == null){
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+       return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        user.getPassword(),
+        mapRolesToAuthorities(user.getRoles()));
+    }
+
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+    }
+	
+	
 	/*
 	 * public void updateUser(Long id, Users u) { Users temp = userrepo.getById(id);
 	 * temp.setFirstName(u.getFirstName()); temp.setLastName(u.getLastName());
@@ -63,7 +79,7 @@ public class UserService  implements UserDetailsService
 	 */
 	
 	public Users loadUserByEmail(String email) {
-		return userrepo.findByEmail(email);
+		return userrepo.findUserByEmail(email);
 	}
 	public Users getUserById(long id) {
 		return userrepo.findById(id).get();
