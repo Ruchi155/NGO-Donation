@@ -41,12 +41,12 @@ class NgoDonationApplicationTests {
 //				.firstName("minh") 
 //				.password("1234").build();
 	
-//	  @Test void testCreateDonation() { 
-//		  Users u1 = userRepo.findById(1L).get();
-//		  DonationType t1 = DonationType.builder(). name("Food for student").build();
-//		  Donation donation = Donation.builder() .donationType(t1) .build();
-//		  donatioRepo.save(donation);
-//		  }
+	  @Test void testCreateDonation() { 
+		  Users u1 = userRepo.findById(1L).get();
+		  DonationType t1 = DonationType.builder(). name("Food for student").build();
+		  Donation donation = Donation.builder() .donationType(t1).amount(100.0).user(u1) .build();
+		  donatioRepo.save(donation);
+		  }
 
 //	 
 //	@Test void testCreatUserProfile() {
@@ -55,23 +55,23 @@ class NgoDonationApplicationTests {
 //		u1.setUserProfile(userProfile);
 //		  userRepo.save(u1);
 //	}
-	@Test
-	void testCreateUser() {
-		Role r1 = Role.builder().name("FEEDER").build();
-		
-		Collection<Role> inputRole = new ArrayList<Role>();
-		inputRole.add(Role.builder().name("ADMIN").build());
-		Users user =  Users.builder()
-				.email("wadam@gmail.com")
-				.firstName("minh") 
-				.password("1234")
-				.roles(inputRole)
-				.build();
-		UserProfile userProfile = UserProfile.builder().address1("3353 Trebol ln, CA").city("San Jose").build();
-		user.setUserProfile(userProfile);
-		userRepo.save(user);
-	}
-	
+//	@Test
+//	void testCreateUser() {
+//		Role r1 = Role.builder().name("FEEDER").build();
+//		
+//		Collection<Role> inputRole = new ArrayList<Role>();
+//		inputRole.add(Role.builder().name("ADMIN").build());
+//		Users user =  Users.builder()
+//				.email("wadam@gmail.com")
+//				.firstName("minh") 
+//				.password("1234")
+//				.roles(inputRole)
+//				.build();
+//		UserProfile userProfile = UserProfile.builder().address1("3353 Trebol ln, CA").city("San Jose").build();
+//		user.setUserProfile(userProfile);
+//		userRepo.save(user);
+//	}
+//	
 //	 @Test void testCreateDonation() {
 //		 Users u1 = userRepo.findById(1L).get();
 //		 DonationType t1 = DonationType.builder(). name("Food for student").build();

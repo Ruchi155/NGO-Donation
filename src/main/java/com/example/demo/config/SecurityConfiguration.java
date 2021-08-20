@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import com.example.demo.services.UserService;
 
 	
@@ -25,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		protected void configure(HttpSecurity http) throws Exception {
 			// TODO Auto-generated method stub
 			http.csrf().disable(); // CSRF ( Cross Site Request Forgery)
-
+//			http.cors();
 			/*
 			 * Home page request to login with role User or Administrator if the user don't
 			 * login then it redirect to /login ROLE_USER, ADMIN, PROVIDER is take from
@@ -62,7 +68,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/?logout").permitAll();
 
 		}
-	  
+//	@Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        final CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+//        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
+//        // setAllowCredentials(true) is important, otherwise:
+//        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
+//        configuration.setAllowCredentials(true);
+//        // setAllowedHeaders is important! Without it, OPTIONS preflight request
+//        // will fail with 403 Invalid CORS request
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+		
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder()
 	{

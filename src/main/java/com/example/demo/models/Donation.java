@@ -44,11 +44,10 @@ public class Donation implements Serializable{
 	@OneToOne(fetch = FetchType.EAGER, 
 			 cascade = CascadeType.ALL  )
 	@JoinColumn(name = "type_id", nullable =  false)
-	@JsonManagedReference 
+
 	private DonationType donationType;  
 	
 	@ManyToOne(fetch = FetchType.EAGER )
-	@JoinColumn(name = "user_id") 
-	@JsonIgnore
+	@JoinColumn(name = "user_id")  
 	private Users user;
 }
