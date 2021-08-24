@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController; 
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.models.UserProfile;
 import com.example.demo.models.Users;
 import com.example.demo.services.UserService; 
  
@@ -45,6 +46,8 @@ public class UserController
 	@PostMapping("/adduser")
 	public ResponseEntity<Users> addUser(@RequestBody Users user)
 	{
+		
+		user.setUserProfile(new UserProfile());
 		Users newuser = userserv.addUser(user);
 		return new ResponseEntity<>(newuser,HttpStatus.CREATED);
 	}

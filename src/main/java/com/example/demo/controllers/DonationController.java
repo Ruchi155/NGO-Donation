@@ -36,6 +36,19 @@ public class DonationController {
 			// TODO: handle exception
 		} 
 	}
+	@GetMapping("/user/{id}")
+	public ResponseEntity<List<Donation> >getAllDonationByUserId(@PathVariable (value= "id") long userId){
+		try {
+			List<Donation> donations =  donateService.getAllDonationByUserId(userId);
+			if(donations.isEmpty()) {
+				return new ResponseEntity<List<Donation>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<Donation>> (donations, HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
+			// TODO: handle exception
+		} 
+	}
 	@PostMapping("/adddonation")
 	public ResponseEntity<Donation> createDonation(@Valid @RequestBody Donation donation) {
 		try {

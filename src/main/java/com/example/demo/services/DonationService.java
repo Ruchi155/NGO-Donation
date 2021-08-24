@@ -18,7 +18,9 @@ public class DonationService {
 	public Optional<Donation >findById(long id) {
 		return donationRepo.findById(id);
 	}
-	 
+	public List<Donation> getAllDonationByUserId(long id) {
+		return donationRepo.getDonationByUserId(id);
+	}
 	public void deleteById(long id) {
 		donationRepo.deleteById(id);
 	}

@@ -52,4 +52,9 @@ public class UserProfile implements Serializable {
 	@JsonBackReference
 	private Users user;
 	
+	public UserProfile(long id)
+	{
+		this.id=id;
+	}
+	
 }

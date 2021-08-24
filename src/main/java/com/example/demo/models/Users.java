@@ -52,8 +52,8 @@ public class Users implements Serializable{
     private Collection<Role> roles; 
     
     @OneToOne(fetch = FetchType.EAGER, 
-			 cascade = CascadeType.ALL  )
-	@JoinColumn(name = "profile_id", referencedColumnName = "id" , nullable =  false)
+			 cascade = CascadeType.ALL )
+	@JoinColumn(name = "profile_id", referencedColumnName = "id")
 	@JsonManagedReference  
     private UserProfile userProfile;
     

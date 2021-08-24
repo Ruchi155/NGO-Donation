@@ -41,20 +41,20 @@ class NgoDonationApplicationTests {
 //				.firstName("minh") 
 //				.password("1234").build();
 	
-	  @Test void testCreateDonation() { 
-		  Users u1 = userRepo.findById(1L).get();
-		  DonationType t1 = DonationType.builder(). name("Food for student").build();
-		  Donation donation = Donation.builder() .donationType(t1).amount(100.0).user(u1) .build();
-		  donatioRepo.save(donation);
-		  }
+//	  @Test void testCreateDonation() { 
+//		  Users u1 = userRepo.findById(1L).get();
+//		  DonationType t1 = DonationType.builder(). name("Food for student").build();
+//		  Donation donation = Donation.builder() .donationType(t1).amount(100.0).user(u1) .build();
+//		  donatioRepo.save(donation);
+//		  }
 
 //	 
-//	@Test void testCreatUserProfile() {
-//		  Users u1 = userRepo.findById(1L).get();
-//		UserProfile userProfile = UserProfile.builder().address1("3353 Trebol ln, CA").city("San Jose").build();
-//		u1.setUserProfile(userProfile);
-//		  userRepo.save(u1);
-//	}
+	@Test void testCreatUserProfile() {
+		  Users u1 = userRepo.findById(48L).get();
+		UserProfile userProfile = UserProfile.builder().address1("3353 Trebol ln, CA").city("San Jose").build();
+		u1.setUserProfile(userProfile);
+		  userRepo.save(u1);
+	}
 //	@Test
 //	void testCreateUser() {
 //		Role r1 = Role.builder().name("FEEDER").build();
