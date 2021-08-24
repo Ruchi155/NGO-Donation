@@ -15,14 +15,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController; 
 import com.example.demo.models.Donation;
+import com.example.demo.models.UserProfile;
+import com.example.demo.models.Users;
 import com.example.demo.services.DonationService;
+import com.example.demo.services.UserProfileService;
+import com.example.demo.services.UserService;
 
 @RestController() 
 @RequestMapping("/donations")
 public class DonationController {
 	@Autowired
 	DonationService donateService;
-	
+	@Autowired
+	UserService userService;
+	@Autowired
+	UserProfileService profileService;
 	@GetMapping("/")
 	public ResponseEntity<List<Donation> >getAllDonation(){
 		try {
@@ -49,9 +56,13 @@ public class DonationController {
 			// TODO: handle exception
 		} 
 	}
-	@PostMapping("/adddonation")
-	public ResponseEntity<Donation> createDonation(@Valid @RequestBody Donation donation) {
+	@PostMapping("/adddonation/{userId}")
+	public ResponseEntity<Donation> createDonation(@PathVariable(value = "userId") Long userId,  
+														@Valid @RequestBody Donation donation) {
 		try {
+			Users user = userService.findUserById(userId); 
+			donation.setUser(user);
+			
 			donateService.save(donation);
 			return new ResponseEntity<Donation> (donation, HttpStatus.CREATED);
 		}catch(Exception e) {
