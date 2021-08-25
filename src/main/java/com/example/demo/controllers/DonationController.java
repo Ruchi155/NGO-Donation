@@ -62,7 +62,7 @@ public class DonationController {
 		try {
 			Users user = userService.findUserById(userId); 
 			donation.setUser(user);
-			
+			donation.setDate(LocalDate.now());
 			donateService.save(donation);
 			return new ResponseEntity<Donation> (donation, HttpStatus.CREATED);
 		}catch(Exception e) {

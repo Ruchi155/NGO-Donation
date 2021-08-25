@@ -34,13 +34,7 @@ import lombok.ToString;
 public class DonationType implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	private String name; 
-	@OneToOne(
-			fetch = FetchType.EAGER,
-			cascade = CascadeType.ALL,
-			mappedBy = "donationType"
-			) 
-	@JsonBackReference
-	private Donation donation;
+
 }

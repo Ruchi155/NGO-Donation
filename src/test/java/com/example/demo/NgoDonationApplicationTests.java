@@ -13,7 +13,9 @@ import com.example.demo.models.Role;
 import com.example.demo.models.UserProfile;
 import com.example.demo.models.Users;
 import com.example.demo.repo.DonationRepo;
-import com.example.demo.repo.UserRepo; 
+import com.example.demo.repo.UserRepo;
+import com.example.demo.services.DonationService;
+import com.example.demo.services.DonationTypeService; 
 
 @SpringBootTest
 class NgoDonationApplicationTests {
@@ -40,21 +42,24 @@ class NgoDonationApplicationTests {
 //				.email("minhbac3@gmail.com")
 //				.firstName("minh") 
 //				.password("1234").build();
-	
-//	  @Test void testCreateDonation() { 
-//		  Users u1 = userRepo.findById(1L).get();
-//		  DonationType t1 = DonationType.builder(). name("Food for student").build();
-//		  Donation donation = Donation.builder() .donationType(t1).amount(100.0).user(u1) .build();
-//		  donatioRepo.save(donation);
-//		  }
+	@Autowired
+	DonationTypeService donationTypeService;
+	@Autowired
+	DonationService donationSerivce ;
+	  @Test void testCreateDonation() { 
+		  Users u1 = userRepo.findById(48L).get();
+		  DonationType t1 = donationTypeService.findById(1L).get();
+		  Donation donation = Donation.builder() .donationType(t1).amount(100.0).user(u1) .build();
+		  donatioRepo.save(donation);
+		  }
 
 //	 
-	@Test void testCreatUserProfile() {
-		  Users u1 = userRepo.findById(48L).get();
-		UserProfile userProfile = UserProfile.builder().address1("3353 Trebol ln, CA").city("San Jose").build();
-		u1.setUserProfile(userProfile);
-		  userRepo.save(u1);
-	}
+//	@Test void testCreatUserProfile() {
+//		  Users u1 = userRepo.findById(48L).get();
+//		UserProfile userProfile = UserProfile.builder().address1("3353 Trebol ln, CA").city("San Jose").build();
+//		u1.setUserProfile(userProfile);
+//		  userRepo.save(u1);
+//	}
 //	@Test
 //	void testCreateUser() {
 //		Role r1 = Role.builder().name("FEEDER").build();

@@ -41,9 +41,8 @@ public class Donation implements Serializable{
 	private LocalDate date;
 	@Column(name =  "amount")
 	private double amount; 
-	@OneToOne(fetch = FetchType.EAGER, 
-			 cascade = CascadeType.ALL  )
-	@JoinColumn(name = "type_id", nullable =  false)
+	@ManyToOne(fetch = FetchType.EAGER  )
+	@JoinColumn(name = "type_id", referencedColumnName = "id" )
 
 	private DonationType donationType;  
 	

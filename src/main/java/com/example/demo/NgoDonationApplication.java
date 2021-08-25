@@ -17,17 +17,12 @@ public class NgoDonationApplication extends SpringBootServletInitializer  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NgoDonationApplication.class, args);
-	}
-	
-
+	} 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
 	{
-		return builder.sources(NgoDonationApplication.class);
-		
-	}
-	
-	
+		return builder.sources(NgoDonationApplication.class); 
+	} 
 	@Bean
 	public CorsFilter corsFilter()
 	{
@@ -44,24 +39,11 @@ public class NgoDonationApplication extends SpringBootServletInitializer  {
 														  "Access-Control-Request-Headers",
 														  "Access-Control-Allow-Credential"));
 		//This code is for working when upload object with json style
-		corsConfiguration.setAllowedHeaders(Arrays.asList("Content-Type"));
+		corsConfiguration.setAllowedHeaders(Arrays.asList("Content-Type","*"));
 		corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
 	    UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource=new UrlBasedCorsConfigurationSource();
 	    urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 	    return new CorsFilter(urlBasedCorsConfigurationSource); 
-	}
-	
-//	 @Bean
-//	  public WebMvcConfigurer corsConfigurer() {
-//	    return new WebMvcConfigurer() {
-//	      @Override
-//	      public void addCorsMappings(CorsRegistry registry) {
-//	       registry.addMapping("/**").allowedOrigins("http://localhost:4200")
-//	                      .allowedMethods("PUT", "DELETE", "GET", "POST");
-//	      }
-//	    };
-//	  }
-//	
-	 
+	}  
 }
 

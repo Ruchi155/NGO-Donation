@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	// provide access to some url, image, function
 	protected void configure(HttpSecurity http) throws Exception {
  
-//			http.cors();
+		http.cors();
 		/*
 		 * Home page request to login with role User or Administrator if the user don't
 		 * login then it redirect to /login ROLE_USER, ADMIN, PROVIDER is take from
