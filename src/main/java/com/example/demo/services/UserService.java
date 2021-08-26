@@ -1,6 +1,4 @@
-package com.example.demo.services;
-
-import java.util.Arrays;
+package com.example.demo.services; 
 
 import java.util.Collection;
 import java.util.List;
@@ -8,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.config.UserRegistrationDto;
+ 
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.models.Role;
 import com.example.demo.models.UserProfile;
@@ -30,21 +28,20 @@ public class UserService implements UserDetailsService
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
-	public Users save(UserRegistrationDto registration)//, tring Role)
+	public Collection<Role> getRole(Users user) {
+		return user.getRoles();
+	}
+	public Users registration(Users users)
 	{
 		Users user = new  Users(); 
-		user.setFirstName(registration.getFirstName());
-		user.setLastName(registration.getLastName());
-		user.setEmail(registration.getEmail());
-		user.setPassword(passwordEncoder.encode(registration.getPassword()));
-	    user.setRoles(Arrays.asList(new Role(registration.getRole())));
-	
+		user.setFirstName(users.getFirstName());
+		user.setLastName(users.getLastName());
+		user.setEmail(users.getEmail());
+		user.setPassword(passwordEncoder.encode(users.getPassword()));
+	    user.setRoles(  users.getRoles()); 
 		user.setUserProfile(new UserProfile());
 		return userrepo.save(user); 
-	 }
-	
-	
+	 } 
 	public Users findUserByEmail(String email) {
 		return userrepo.findUserByEmail(email);
 	}
@@ -54,13 +51,8 @@ public class UserService implements UserDetailsService
         Users user = userrepo.findUserByEmail(email);
         if (user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-       return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        } 
+       return new  User(user.getEmail(),
         user.getPassword(),
         mapRolesToAuthorities(user.getRoles()));
     }
@@ -69,25 +61,13 @@ public class UserService implements UserDetailsService
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
-    }
-	
-	
-	/*
-	 * public void updateUser(Long id, Users u) { Users temp = userrepo.getById(id);
-	 * temp.setFirstName(u.getFirstName()); temp.setLastName(u.getLastName());
-	 * temp.setEmail(u.getEmail()); userrepo.save(temp); }
-	 */
-	
+    }  
 	public Users loadUserByEmail(String email) {
 		return userrepo.findUserByEmail(email);
 	}
 	public Users getUserById(long id) {
 		return userrepo.findById(id).get();
-	}
-
-	public Users addUser(Users u) {
-		return userrepo.save(u);
-	}
+	} 
 
 	public void deleteUser(long id) {
 		userrepo.deleteById(id);
@@ -101,7 +81,7 @@ public class UserService implements UserDetailsService
 		return userrepo.findAll();
 	} 
 	
-	public void SaveUser(Users u) {
+	public void saveUser(Users u) {
 		// TODO Auto-generated method stub
 		userrepo.save(u);
 		
@@ -123,7 +103,8 @@ public class UserService implements UserDetailsService
 		// TODO Auto-generated method stub
 		return userrepo.findAll();
 	}
-
+	
+	
 
 
 }

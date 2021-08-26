@@ -1,10 +1,14 @@
 package com.example.demo.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping; 
@@ -15,10 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.config.JwtTokenProvider;
+import com.example.demo.models.AuthBody;
 import com.example.demo.models.UserProfile;
 import com.example.demo.models.Users;
 import com.example.demo.services.UserService; 
- 
+import org.springframework.security.core.AuthenticationException;
+import static org.springframework.http.ResponseEntity.ok;
+import org.springframework.security.authentication.BadCredentialsException;
 @RestController() 
 @RequestMapping("/users")
 @CrossOrigin
@@ -27,7 +35,27 @@ public class UserController
 
 	@Autowired
 	UserService userserv;
-	
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody AuthBody data) {
+        try {
+            String userEmail = data.getEmail();
+            String password = data.getPassword();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEmail, password));
+            String token = jwtTokenProvider.createToken(userEmail, this.userserv.findUserByEmail(userEmail).getRoles());
+            Map<Object, Object> model = new HashMap<>();
+            model.put("userEmail", userEmail);
+            model.put("token", token);
+            return ok(model);
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid email/password supplied");
+        }
+    }
+    
 	/* User Controller */
 	//@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/")
@@ -45,12 +73,17 @@ public class UserController
 	}
 	
 	@PostMapping("/adduser")
-	public ResponseEntity<Users> addUser(@RequestBody Users user)
-	{
+	public ResponseEntity  addUser(@RequestBody Users user)
+	{ 
 		
-		user.setUserProfile(new UserProfile());
-		Users newuser = userserv.addUser(user);
-		return new ResponseEntity<>(newuser,HttpStatus.CREATED);
+		Users userExists = userserv.findUserByEmail(user.getEmail());
+        if (userExists != null) {
+            throw new BadCredentialsException("User with username: " + user.getEmail() + " already exists");
+        }
+		userserv.registration(user);
+		Map<Object, Object> model = new HashMap<>();
+        model.put("message", "User registered successfully");
+        return ok(model);
 	}
 	
 	@PutMapping("/updateuser/{id}")

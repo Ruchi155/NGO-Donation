@@ -16,41 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class NGOController 
-{
-//	@PostMapping("/logout")
-//	public String logoutDo(HttpServletRequest request,HttpServletResponse response){
-//	HttpSession session= request.getSession(false);
-//	    SecurityContextHolder.clearContext();
-//	         session= request.getSession(false);
-//	        if(session != null) {
-//	            session.invalidate();
-//	        }
-//	        for(Cookie cookie : request.getCookies()) {
-//	            cookie.setMaxAge(0);
-//	        }
-//
-//	    return "login";
-//	}
-	@RequestMapping()
-	public String main() {
-		return "login";
-		
-	}
-	@GetMapping("/login")
-	public String login() {
-		System.out.println("login success");
-		return "login";
-	}
-	
-	@GetMapping("/")
-	public String root()
-	
-	{
-		return "login";
-		
-	}
-	
-	
-	
+{ 
 
 }
