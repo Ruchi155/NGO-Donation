@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.JwtTokenProvider;
 import com.example.demo.models.AuthBody;
+import com.example.demo.models.Donation;
 import com.example.demo.models.UserProfile;
 import com.example.demo.models.Users;
+import com.example.demo.repo.UserRepo;
 import com.example.demo.services.UserService; 
 import org.springframework.security.core.AuthenticationException;
 import static org.springframework.http.ResponseEntity.ok;
@@ -35,26 +38,9 @@ public class UserController
 
 	@Autowired
 	UserService userserv;
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    AuthenticationManager authenticationManager;
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthBody data) {
-        try {
-            String userEmail = data.getEmail();
-            String password = data.getPassword();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEmail, password));
-            String token = jwtTokenProvider.createToken(userEmail, this.userserv.findUserByEmail(userEmail).getRoles());
-            Map<Object, Object> model = new HashMap<>();
-            model.put("userEmail", userEmail);
-            model.put("token", token);
-            return ok(model);
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email/password supplied");
-        }
-    }
+  
+  @Autowired
+  UserRepo userRepo;
     
 	/* User Controller */
 	//@CrossOrigin(origins = "http://localhost:4200")
@@ -63,6 +49,20 @@ public class UserController
 	{
 		List<Users> users = userserv.findAllUsers();
 		return new ResponseEntity<>(users,HttpStatus.OK);
+	} 
+	@RequestMapping(value = "/finduserEmail/{email}", method = RequestMethod.GET)
+	public ResponseEntity<Users> getUserByEmail(@PathVariable("email") String email)
+	{
+		 
+		
+		try {
+			 Users users = userRepo.findUserByEmail(email);
+			 
+			return new ResponseEntity<Users> (users, HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
+			// TODO: handle exception
+		} 
 	}
 	
 	@GetMapping("/finduser/{id}")
@@ -72,19 +72,7 @@ public class UserController
 		return new ResponseEntity<>(user,HttpStatus.OK);
 	}
 	
-	@PostMapping("/adduser")
-	public ResponseEntity  addUser(@RequestBody Users user)
-	{ 
-		
-		Users userExists = userserv.findUserByEmail(user.getEmail());
-        if (userExists != null) {
-            throw new BadCredentialsException("User with username: " + user.getEmail() + " already exists");
-        }
-		userserv.registration(user);
-		Map<Object, Object> model = new HashMap<>();
-        model.put("message", "User registered successfully");
-        return ok(model);
-	}
+ 
 	
 	@PutMapping("/updateuser/{id}")
 	public ResponseEntity<Users> updateUser(@PathVariable("id") long id, @RequestBody Users user)
@@ -104,31 +92,5 @@ public class UserController
 	}
 	
 	
-	//Using thymeleaf
-	/*
-	 * @RequestMapping("list_users") public String listusers(Model model) {
-	 * List<Users> list = userserv.getAllUsers(); model.addAttribute("users", list);
-	 * return "user"; }
-	 * 
-	 * @RequestMapping("/newuser") public String addnewUser(Model model) { Users m =
-	 * new Users(); model.addAttribute("user", m); return "new_user"; }
-	 * 
-	 * @RequestMapping(value= "/saveuser", method=RequestMethod.POST) public String
-	 * saveUser(@ModelAttribute("user") Users u) { userserv.SaveUser(u); return
-	 * "redirect:/list_users"; //return "redirect:/admin/list_users"; }
-	 * 
-	 * @RequestMapping(value= "/saveuser/{id}", method=RequestMethod.POST) public
-	 * String saveUser(@ModelAttribute("user") Users u ,@PathVariable(name="id")
-	 * long id) { userserv.deleteUserById(id); userserv.SaveUser(u); return
-	 * "redirect:/list_users"; //return "redirect:/admin/list_users"; }
-	 * 
-	 * @RequestMapping("/edituser/{id}") public ModelAndView
-	 * showEditUserPage(@PathVariable(name="id") long id) { ModelAndView mav= new
-	 * ModelAndView("edit_user"); Users m= userserv.get(id);
-	 * mav.addObject("user",m); return mav; }
-	 * 
-	 * @RequestMapping("/deleteuser/{id}") public String
-	 * deleteUser(@PathVariable(name="id") long id) { userserv.deleteUserById(id);
-	 * return "redirect:/list_users"; }
-	 */
+	 
 }

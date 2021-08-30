@@ -2,6 +2,7 @@ package com.example.demo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ import com.example.demo.models.Users;
 import com.example.demo.repo.DonationRepo;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.services.DonationService;
-import com.example.demo.services.DonationTypeService; 
+import com.example.demo.services.DonationTypeService;
+import com.example.demo.services.UserService; 
 
 @SpringBootTest
 class NgoDonationApplicationTests {
@@ -27,8 +29,10 @@ class NgoDonationApplicationTests {
 	DonationRepo donatioRepo;
 	@Autowired 
 	UserRepo userRepo;
-
-
+	@Autowired
+	UserService userService;
+ 
+ 
 	/*
 	 * @Test void testCreateDonation() { Users u1 = userRepo.findById(1L).get();
 	 * DonationType t1 = DonationType.builder(). name("Food for student").build();
@@ -46,12 +50,12 @@ class NgoDonationApplicationTests {
 	DonationTypeService donationTypeService;
 	@Autowired
 	DonationService donationSerivce ;
-	  @Test void testCreateDonation() { 
-		  Users u1 = userRepo.findById(48L).get();
-		  DonationType t1 = donationTypeService.findById(1L).get();
-		  Donation donation = Donation.builder() .donationType(t1).amount(100.0).user(u1) .build();
-		  donatioRepo.save(donation);
-		  }
+//	  @Test void testCreateDonation() { 
+//		  Users u1 = userRepo.findById(48L).get();
+//		  DonationType t1 = donationTypeService.findById(1L).get();
+//		  Donation donation = Donation.builder() .donationType(t1).amount(100.0).user(u1) .build();
+//		  donatioRepo.save(donation);
+//		  }
 
 //	 
 //	@Test void testCreatUserProfile() {

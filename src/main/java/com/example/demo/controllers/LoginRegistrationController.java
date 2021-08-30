@@ -34,8 +34,10 @@ public class LoginRegistrationController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthBody data) {
         try {
-            String userEmail = data.getEmail();
-            String password = data.getPassword();
+            String userEmail = data.getUserEmail();
+            String password = data.getUserPassword();
+            System.out.println(userEmail + " and " +password);
+            
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEmail, password));
             String token = jwtTokenProvider.createToken(userEmail, this.userserv.findUserByEmail(userEmail).getRoles());
             Map<Object, Object> model = new HashMap<>();

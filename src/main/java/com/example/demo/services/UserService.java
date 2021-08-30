@@ -42,13 +42,13 @@ public class UserService implements UserDetailsService
 		user.setUserProfile(new UserProfile());
 		return userrepo.save(user); 
 	 } 
-	public Users findUserByEmail(String email) {
-		return userrepo.findUserByEmail(email);
+	public  Users findUserByEmail(String email) {
+		return userrepo.findUserByEmail(email) ;
 	}
 	
 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Users user = userrepo.findUserByEmail(email);
+        Users user = this.findUserByEmail(email);
         if (user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         } 
@@ -62,9 +62,7 @@ public class UserService implements UserDetailsService
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }  
-	public Users loadUserByEmail(String email) {
-		return userrepo.findUserByEmail(email);
-	}
+ 
 	public Users getUserById(long id) {
 		return userrepo.findById(id).get();
 	} 

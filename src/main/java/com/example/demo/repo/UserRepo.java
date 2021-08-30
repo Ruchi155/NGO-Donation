@@ -1,5 +1,6 @@
 package com.example.demo.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,6 +16,6 @@ public interface UserRepo extends JpaRepository<Users, Long> {
 
 	Optional<Users> findUsersById(long id);
 	
-	@Query("SELECT u FROM Users u WHERE u.email = :email")
-	Users findUserByEmail(@Param("email")String email);
+	@Query("SELECT u FROM Users u WHERE u.email = ?1")
+	 Users findUserByEmail(String email);
 }
