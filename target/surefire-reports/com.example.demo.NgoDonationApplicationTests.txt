@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.example.demo.NgoDonationApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 11.106 s <<< FAILURE! - in com.example.demo.NgoDonationApplicationTests
+testGetUserByEmail  Time elapsed: 0.521 s  <<< ERROR!
+java.lang.StackOverflowError
+
